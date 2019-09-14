@@ -161,6 +161,8 @@
 .dashboardModal > div > div > div > h2 {
 	line-height: 35px;
 }
+
+
 /* Responsiveness */
 @media screen and (max-width: 720px) {
 	.mainheader > div:nth-child(2) > ul {
