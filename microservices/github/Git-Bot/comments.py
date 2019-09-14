@@ -9,7 +9,6 @@ def create_comment(org_name, repo_name, issue_name, username, password, text):
     session.auth = (username, password)
     req = session.post(url, json.dumps(dict_content))
     res = req.text
-    res_json = req.json()
     return res
 
 
