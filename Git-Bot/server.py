@@ -1,5 +1,7 @@
 from flask import Flask, request
-from comments import create_comment
+import requests
+import json
+from comments import create_comment, edit_comment
 
 
 app = Flask(__name__)
@@ -23,15 +25,30 @@ def new_bounty(org_name, repo_name, issue_name):
         return req
 
 
-@app.route('/new_applicant/<org_name>/<repo_name>/<issue_name>', methods=['POST'])
+@app.route('/new_applicant/<org_name>/<repo_name>/<issue_name>', methods=['GET','POST'])
 def new_applicant(org_name, repo_name, issue_name):
-    if request.method == 'POST':
-        name = request.args.get('name')
-        link = request.args.get('link')
-        desc = request.args.get('description')
-        content = "### " + name + ", " + link + " has applied for this bounty: " + desc + "."
-        req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
-        return req
+    # name = request.args.get('name')
+    # link = request.args.get('link')
+    # desc = request.args.get('description')
+    
+    
+    url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
+    session = requests.session()
+    session.auth = (USERNAME, PASSWORD)
+    req = session.get(url)
+    data = req.json()
+
+    for x in data:
+        if x['body'][:13] == "Applications:":
+            edit_comment(x['html_url'], USERNAME, PASSWORD, "change this up!")
+        else:
+            create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, "Applications:")
+
+    return req.text
+
+    # first need to get a list of all the comments
+    # if comment exists with title "applicants:" then edit that
+    # if it doesn't exist then make a new one
 
 
 @app.route('/work_submitted/<org_name>/<repo_name>/<issue_name>', methods=['POST'])
