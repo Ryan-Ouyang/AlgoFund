@@ -1,17 +1,18 @@
 from flask import Flask, request
+import requests
+import json
 from comments import create_comment
 
-
 app = Flask(__name__)
-
 
 USERNAME = "Algo-Bot"
 PASSWORD = "AlgoFund2019HTN"
 
-TEST_STRING = "/new_bounty"
+@app.route('/')
+def defaults():
+    return 'Hello World!' # definitely remove this later
 
-
-@app.route('/new_bounty/<org_name>/<repo_name>/<issue_name>/', methods=['POST'])
+@app.route('/new_bounty/<org_name>/<repo_name>/<issue_name>', methods=['POST'])
 def new_bounty(org_name, repo_name, issue_name):
     if request.method == 'POST':
         value = request.args.get('value')
@@ -21,6 +22,19 @@ def new_bounty(org_name, repo_name, issue_name):
         content = "### A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
         req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
         return req
+
+
+@app.route('/new_applicant/<organization>/<repo>/<issuenum>', methods=['GET', 'POST']) # and this comes with ?data=name, link, description
+def applicant(organization, repo, issuenum):
+    url = "https://api.github.com/repos/"+organization+"/"+repo+"/"+issuenum+"/comments"
+    print(url)
+    comment_dict = {"body": request.args.get('name')+ " " + request.args.get('link') + " " + request.args.get('description')}
+    session = requests.session()
+    session.auth = (USERNAME, PASSWORD)
+    req = session.post(url, json.dumps(comment_dict))
+    res = req.text
+    res_json = req.json()
+    return res, res_json
 
 
 @app.route('/work_finished/<org_name>/<repo_name>/<issue_name>/', methods=['POST'])
@@ -39,4 +53,3 @@ def work_finished(org_name, repo_name, issue_name):
 
 if __name__ == '__main__':
     app.run()
-
