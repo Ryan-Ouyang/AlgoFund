@@ -1,0 +1,133 @@
+.header {
+	height: 90px;
+	background-color: #96A8Fb;
+}
+
+.subheader {
+	height: 35px;
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+}
+
+.subheader > p {
+	font-weight: 500;
+	font-size: 15px;
+	margin: 0px;
+	line-height: 35px;
+}
+
+.mainheader {
+	height: 55px;
+	background-color: #96A8Fb;
+}
+
+.mainheader > div:nth-child(1) {
+	width: 200px;
+	display: inline-block;
+	height: 55px;
+}
+
+.mainheader > div:nth-child(1) > a {
+	text-decoration: none;
+	padding-left: 20px;
+	transition: 0.1s ease-in-out;
+}
+
+.mainheader > div:nth-child(1) > a > img {
+	height: 35px;
+	margin-top: 10px;
+}
+
+.mainheader > div:nth-child(1) > a:hover {
+	opacity: 0.8;
+}
+
+.mainheader > div:nth-child(2) {
+	width: calc(100% - 200px);
+	display: inline-block;
+	height: 45px;
+}
+
+.menu {
+	list-style-type: none;
+	float: right;
+	height: 100%;
+	padding-right: 20px;
+}
+
+.menu > li {
+	display: inline-block;
+	margin: 2px 15px 0px 15px;
+}
+
+.menu > li > a {
+	text-decoration: none;
+	font-weight: 500;
+	color: #fff;
+	padding-bottom: 2px;
+}
+
+.menu > li > a:hover {
+	border-bottom: 2px solid #fff;
+}
+
+.menu > li:last-child > a {
+	background-color: #7A8ED4;
+	padding: 10px 15px 10px 15px;
+	border-radius: 5px;
+	transition: 0.15s ease-in-out;
+}
+
+.menu > li:last-child > a:hover {
+	background-color: rgb(130, 152, 230);
+	border-bottom: none;
+}
+
+.mainheader > div:nth-child(3) {
+	position: absolute;
+	width: calc(100% - 40px);
+	top: 100px;
+	left: 20px;
+	background-color: #fff;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 0px 24px 6px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0px 0px 24px 6px rgba(0,0,0,0.1);
+	box-shadow: 0px 0px 24px 6px rgba(0,0,0,0.1);
+}
+
+.mainheader > div:nth-child(3) > .menu {
+	float: left;
+	padding-left: 20px;	
+	width: calc(100% - 40px);
+}
+
+.mainheader > div:nth-child(3) > .menu > li {
+	display: inline-block;
+	width: 100%;
+	margin: 7.5px 0px 7.5px 0px;
+}
+
+.mainheader > div:nth-child(3) > .menu > li > a {
+	color: #000 !important;
+}
+
+.mainheader > div:nth-child(3) > .menu > li:last-child {
+	margin: 17.5px 0px 7.5px 0px;
+}
+
+.mainheader > div:nth-child(3) > .menu > li:last-child > a {
+	color: #fff !important;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 720px) {
+	.mainheader > div:nth-child(2) > ul {
+		display: none;
+	}
+	.mainheader > div:nth-child(2) > div {
+		float: right;
+		margin-right: 20px;
+		margin-top: 20px;
+	}
+}
