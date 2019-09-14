@@ -38,12 +38,14 @@
 	}
 	.footer > div:nth-child(1) {
 		width: 100%;
+		text-align: center;
 	}
 	.footer > div:nth-child(2) {
 		width: 100%;
+		text-align: center;
 	}
 	.footer > div:nth-child(2) > p {
-		float: left;
+		float: none;
 		line-height: 25px;
 		padding: 20px 0px 20px 0px;
 	}
@@ -98,4 +100,8 @@
 	.subfooter > div > p {
 		width: auto;
 	}
+}
+
+.fix-footer {
+	background-color: #333;
 }
