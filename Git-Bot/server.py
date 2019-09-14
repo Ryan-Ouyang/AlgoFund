@@ -31,30 +31,43 @@ def new_applicant(org_name, repo_name, issue_name):
     name = request.args.get('name')
     link = request.args.get('link')
     desc = request.args.get('description')
-    content = "# Applications:" + \
-              "## " + repo_name + \
-              "1. " + name + ", " + link + " has applied for this bounty: " + desc + "."
-    applicant_num = 1
+    
 
     url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
     session = requests.session()
     session.auth = (USERNAME, PASSWORD)
     req = session.get(url)
     data = req.json()
+    content = ""
 
     exists = False
     link = ""
+    applicant_num = 1
+
 
     for x in data:
-        if x['body'][:13] == "Applications:":
+        if x['body'][:15] == "# Applications:":
             exists = True
-            link = x['url']
+            commentlink = x['url']
+            applicant_num = int(x['body'][16])
+            content = x['body']
+            print(str(applicant_num) + " " + content)
 
     if exists:
         applicant_num += 1
-        content += str(applicant_num) + ". " + name + ", " + link + " has applied for this bounty: " + desc + "."
-        req = edit_comment(link, USERNAME, PASSWORD, content)
+
+        content = content[:16] + str(applicant_num) + content[17:]
+
+        content += str(applicant_num) + ". " + name + ", " + link + " has applied for this bounty: " + desc + ".\n"
+        req = edit_comment(commentlink, USERNAME, PASSWORD, content)
+
+
+        print(content)
+
     else:
+        content = "# Applications: 1 \n" + \
+              "## " + repo_name + "\n" + \
+              "1. " + name + ", " + link + " has applied for this bounty: " + desc + ".\n"
         req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
 
     return req
