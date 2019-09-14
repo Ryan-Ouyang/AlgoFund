@@ -9,9 +9,13 @@ def create_comment(org_name, repo_name, issue_name, username, password, text):
     session.auth = (username, password)
     req = session.post(url, json.dumps(dict_content))
     res = req.text
-    res_json = req.json()
     return res
 
 
-def edit_comment():
-    pass
+def edit_comment(location, username, password, text):
+    dict_content = {"body": text}
+    session = requests.session()
+    session.auth = (username, password)
+    req = session.post(location, json.dumps(dict_content))
+    res = req.text
+    return res
