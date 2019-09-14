@@ -1,4 +1,5 @@
 import React from 'react';
+import github from './github.svg';
 
 export default class Github extends React.Component {
 	render() {
@@ -8,7 +9,11 @@ export default class Github extends React.Component {
 					<h2>Signin w/ Github</h2>
 				</div>
 				<div>
-					Auth button
+					<button>
+						<div>
+							<img src={github} alt='Github logo' />
+						</div>
+					</button>
 				</div>
 			</div>
 		);
