@@ -1,0 +1,101 @@
+.layout > div:nth-child(1) {
+	width: 230px;
+	height: calc(100vh - 90px);
+	background-color: #333;
+	display: inline-block;
+	vertical-align: top;
+	padding: 0px 20px 0px 20px;
+	color: #fff;
+}
+
+.layout > div:nth-child(1) > div:nth-child(1) {
+	display: inline-block;
+	width: 100%;
+	height: 100px;
+}
+
+.layout > div:nth-child(1) > div:nth-child(1) > a {
+	text-decoration: none;
+	color: #fff;
+	font-weight: 500;
+	background-color: #96A8Fb;
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	padding: 10px 0px 10px 0px;
+	border-radius: 5px;
+	margin-top: -10px;
+	transition: 0.15s ease-in-out;
+}
+
+.layout > div:nth-child(1) > div:nth-child(1) > a:hover {
+	background-color: rgb(179, 193, 255);
+}
+
+.layout > div:nth-child(1) > div:nth-child(2) > h3 {
+	padding-top: 20px;
+}
+
+.layout > div:nth-child(1) > div:nth-child(2) > p {
+	font-size: 14px;
+	margin-top: -10px;
+}
+.layout > div:nth-child(1) > div:nth-child(2) > button {
+	width: 100%;
+	height: 30px;
+	margin: 2.5px 0px 2.5px 0px;
+	border-radius: 5px;
+	border: 2px solid rgb(121, 121, 121);
+	background: none;
+	color: rgb(121, 121, 121);
+	font-weight: 500;
+}
+
+.layout > div:nth-child(1) > div:nth-child(3) > p {
+	font-size: 14px;
+	margin-top: -10px;
+}
+
+.layout > div:nth-child(1) > div:nth-child(3) > button {
+	width: 100%;
+	height: 30px;
+	margin: 2.5px 0px 2.5px 0px;
+	border-radius: 5px;
+	border: 2px solid rgb(121, 121, 121);
+	background: none;
+	color: rgb(121, 121, 121);
+	font-weight: 500;
+}
+
+.layout > div:nth-child(2) {
+	width: calc(100% - 270px);
+	height: calc(100vh - 90px);
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 700px) {
+	.layout > div:nth-child(1) {
+		width: calc(100% - 40px);
+		height: auto;
+		padding-bottom: 20px;
+	}
+
+	.layout > div:nth-child(1) > div:nth-child(2) {
+		width: 45%;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 2.5%;
+	}
+	
+	.layout > div:nth-child(1) > div:nth-child(3) {
+		width: 45%;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 2.5%;
+	}
+	.layout > div:nth-child(2) {
+		width: 100%;
+	}
+}

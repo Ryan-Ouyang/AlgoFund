@@ -1,7 +1,7 @@
 .CTA {
 	height: 400px;
 	text-align: center;
-	background: url('https://hackclub.com/bank/bg.jpg');
+	background: url('./bg.jpg');
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
