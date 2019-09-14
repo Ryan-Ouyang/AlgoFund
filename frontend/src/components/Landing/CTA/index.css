@@ -1,0 +1,82 @@
+.CTA {
+	height: 400px;
+	text-align: center;
+	background: url('https://hackclub.com/bank/bg.jpg');
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.filter {
+	height: 400px;
+	background-color: rgba(	150, 168, 251, 0.80);
+}
+
+.filter > div > div > h1 {
+	color: #fff;
+	font-size: 60px;
+	margin-bottom: 0px;
+}
+
+.filter > div > div > p {
+	max-width: 600px;
+	font-size: 18px;
+	line-height: 26px;
+	color: #fff;
+	display: inline-block;
+	margin: 0px;
+	font-weight: 500;
+}
+
+.filter > div > div > div > ul {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.filter > div > div > div > ul > li {
+	display: inline-block;
+	margin: 0px 15px 0px 15px;
+}
+
+.filter > div > div > div > ul > li > a {
+	padding: 10px 15px 10px 15px;
+	border-radius: 5px;
+	text-decoration: none;
+	transition: 0.15s ease-in-out;
+	border: 2px solid transparent;
+	font-weight: 500;
+}
+
+.filter > div > div > div {
+	margin-top: 10px;
+}
+
+.filter > div > div > div > ul > li:first-child > a {
+	border-color: #fff;
+	color: #fff;
+}
+
+.filter > div > div > div > ul > li:first-child > a:hover {
+	background-color: #fff;
+	color: rgb(121, 136, 206);
+}
+
+.filter > div > div > div > ul > li:last-child > a {
+	background-color: #fff;
+	border-radius: #fff;
+	color: rgb(121, 136, 206);
+}
+
+.filter > div > div > div > ul > li:last-child > a:hover {
+	opacity: 0.9;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 400px) {
+	.filter > div > div > h1 {
+		font-size: 45px;
+	}
+	.filter > div > div > div {
+		display: none;
+	}
+}
