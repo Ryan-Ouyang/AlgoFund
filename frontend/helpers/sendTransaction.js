@@ -24,7 +24,7 @@ const algodclient = new algosdk.Algod(token, baseServer, port);
 // var recoveredAccount = algosdk.mnemonicToSecretKey(mnemonic); 
 // console.log(recoveredAccount.addr);
 
-async function sendTransaction(mnemonic, note, amount) {
+async function sendTransaction(mnemonic, note, amount, toAddr) {
 
     var recoveredAccount = algosdk.mnemonicToSecretKey(mnemonic); 
     console.log(recoveredAccount.addr);
@@ -34,7 +34,7 @@ async function sendTransaction(mnemonic, note, amount) {
 
     let txn = {
         "from": recoveredAccount.addr,
-        "to": config.ESCROW_ADDRESS,
+        "to": toAddr,
         "fee": 10,
         "amount": amount,
         "firstRound": params.lastRound,
@@ -47,6 +47,7 @@ async function sendTransaction(mnemonic, note, amount) {
     let signedTxn = algosdk.signTransaction(txn, recoveredAccount.sk);
     let tx = (await postAlgodclient.sendRawTransaction(signedTxn.blob));
     console.log("Transaction : " + tx.txId);
+    return tx.txId;
 }
 
 module.exports = sendTransaction
