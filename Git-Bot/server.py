@@ -7,7 +7,7 @@ from comments import create_comment, edit_comment
 app = Flask(__name__)
 
 
-USERNAME = "Algo-Bot"
+USERNAME = "Algo-Bot2"
 PASSWORD = "AlgoFund2019HTN"
 
 #TEST_STRING = "/new_bounty"
@@ -38,11 +38,20 @@ def new_applicant(org_name, repo_name, issue_name):
     req = session.get(url)
     data = req.json()
 
+    exists = False
+    link = ""
+
     for x in data:
         if x['body'][:13] == "Applications:":
-            edit_comment(x['html_url'], USERNAME, PASSWORD, "change this up!")
-        else:
-            create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, "Applications:")
+            exists = True
+            link = x['url']
+
+    
+    if exists:
+        edit_comment(link, USERNAME, PASSWORD, "change this up!")
+    else:
+        create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, "Applications:")
+
 
     return req.text
 
