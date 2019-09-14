@@ -4,6 +4,7 @@ import json
 
 def create_comment(org_name, repo_name, issue_name, username, password, text):
     url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
+    print(url)
     dict_content = {"body": text}
     session = requests.session()
     session.auth = (username, password)
