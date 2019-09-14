@@ -1,3 +1,8 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .scrollview {
 	height: 300px;
 	text-align: center;
@@ -17,6 +22,7 @@
 }
 .owl-stage {
 	max-height: 300px !important;
+	
 }
 .owl-item {
 	padding: 0px !important;
