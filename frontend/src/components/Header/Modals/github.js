@@ -9,9 +9,9 @@ export default class Github extends React.Component {
 					<h2>Signin w/ Github</h2>
 				</div>
 				<div>
-					<button>
+					<button onClick={this.props.handleAuth}>
 						<div>
-							<img src={github} alt='Github logo' />
+							<img src={github} alt='Github logo' width="100px" />
 						</div>
 					</button>
 				</div>

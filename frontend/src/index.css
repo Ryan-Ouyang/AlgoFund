@@ -16,6 +16,8 @@ body {
   padding: 0px 40px 0px 40px;
 }
 
+:focus {outline:none;}
+
 /* Responsiveness */
 @media screen and (min-width: 1400px) {
 	.page {

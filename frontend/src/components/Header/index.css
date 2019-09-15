@@ -162,7 +162,23 @@
 	line-height: 35px;
 }
 
+.dashboardModal > div > div > div:nth-child(2) > button {
+	width: calc(100% - 20px);
+	height: 210px;
+	margin: 10px 0px 0px 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	transition: 0.15s ease-in-out;
+}
 
+.dashboardModal > div > div > div:nth-child(2) > button:hover {
+	background-color: rgb(243, 243, 243);
+}
+
+.dashboardModal > div > div > div:nth-child(2) > button > img {
+	width: 100px;
+	height: 100px !important;
+}
 /* Responsiveness */
 @media screen and (max-width: 720px) {
 	.mainheader > div:nth-child(2) > ul {
