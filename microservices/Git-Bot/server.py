@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 
-USERNAME = "Algo-Bot2"
+USERNAME = "Algo-Bot1"
 PASSWORD = "AlgoFund2019HTN"
 
 #TEST_STRING = "/new_bounty"
@@ -39,7 +39,7 @@ def new_bounty(org_name, repo_name, issue_name):
     for l in fl:
         content += l
 
-    content = content.format(username, link_user, value)
+    content = content.format(username, link_user, value, org_name, repo_name, issue_name)
     print(content)
 
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
@@ -118,7 +118,7 @@ def work_submitted(org_name, repo_name, issue_name):
     for l in fl:
         content += l
 
-    content = content.format(name, link, pr_num, pr_url, name)
+    content = content.format(name, link, pr_num, pr_url, name, org_name, repo_name, issue_name)
     print(content)
 
 
@@ -135,9 +135,26 @@ def work_finished(org_name, repo_name, issue_name):
     name_2 = request.args.get('name_2')
     link_2 = request.args.get('link_2')
     value = request.args.get('value')
-    content = "## Resolved\n" + \
-              name_1 + ", " + link_1 + " has paid out " + name_2 + ", " + link_2 + " for this bounty valued " + \
-              "at " + value + "."
+    surveylink = request.args.get('surveylink')
+    
+    content = ""
+
+    cur_path = os.path.dirname(__file__)
+
+    new_path = os.path.relpath('templates/work_paid.md', cur_path)
+    
+    print(str(cur_path))
+
+    f = open(new_path, 'r')
+    fl = f.readlines()
+
+    for l in fl:
+        content += l
+
+    content = content.format(value, name_1, link_1, name_2, link_2, surveylink)
+    print(content)
+
+
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
     return req
 
