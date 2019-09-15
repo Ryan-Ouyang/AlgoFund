@@ -65,8 +65,4 @@ async function getBounties() {
     return bountyList
 }
 
-getBounties();
-
-module.exports = {
-    getBounties: getBounties,
-};
+module.exports = getBounties
