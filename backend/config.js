@@ -1,5 +1,5 @@
-const ESCROW_ADDRESS = 'DQ5ZXPQ2FJI6PYUTMQVLVCN26AS3KJ6KGKPFDNCYVMJWFHE4PJNKYMNFQU'
-const ESCROW_MNEMONIC = 'estate amateur practice blood atom gloom dizzy city protect piano ancient abandon phrase staff olive panel glove old word crane plunge arrest beyond absorb horror'
+const ESCROW_ADDRESS = 'NOHZZ77UL4P3D7UICMGXXJ5MAHSYXL24KKYDFUEEO3GBGNSYYOUXRBEOSI'
+const ESCROW_MNEMONIC = 'tribe gadget pact hole trust silver reject cousin example present thunder panic pioneer pretty emerge lend main mountain panther main program purpose suit absent dune'
 
 const IDENTITY_ADDRESS = 'identity-address'
 
