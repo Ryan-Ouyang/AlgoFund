@@ -50,6 +50,10 @@ export default class Header extends React.Component {
 			showMenuIcon: true,
 			modalOpen: false,
 			modalTab: 0,
+			clientID: '286b9d923c6b5f25a54a',
+			redirectUI: 'http://localhost:3000/explorer',
+			token: null,
+			isAuthed: false
 		};
 		
 		this.showMenu = this.showMenu.bind(this);
@@ -64,11 +68,13 @@ export default class Header extends React.Component {
 		this.handleAuth = this.handleAuth.bind(this);
 		this.handleMnemonic = this.handleMnemonic.bind(this);
 		this.renderTab = this.renderTab.bind(this);
-	}
 
-	componentDidMount() {
-		this.updateDimensions();
-		window.addEventListener('resize', this.updateDimensions.bind(this));
+		// Authentication flow
+		this.removeAll = this.removeAll.bind(this);
+		
+		// Animations
+		this.mouseEnter = this.mouseEnter.bind(this);
+		this.mouseLeave = this.mouseLeave.bind(this);
 	}
 
 	componentWillUnmount() {
@@ -83,11 +89,25 @@ export default class Header extends React.Component {
 		this.setState({ modalOpen: false, modalTab: 0 })
 	}
 
-	handleAuth() {
-		this.setState({ modalTab: this.state.modalTab + 1});
+	handleAuth(e) {
+		e.preventDefault();
+
+		window.OAuth.initialize('FeLOU0uV-jhvi0RiwMsYNAdBJGA');
+
+		window.OAuth.popup('github').then((provider) => {
+			
+			provider.me().then((data) => {
+				localStorage.setItem('github-name', data.name);
+				localStorage.setItem('github-avatar', data.avatar);
+				this.setState({ modalTab: this.state.modalTab + 1});
+				this.authenticationFlow();
+			});
+		});
 	}
 
-	handleMnemonic() {
+	handleMnemonic(input) {
+		localStorage.setItem('mnemonic', input);
+		console.log(localStorage.getItem('mnemonic'));
 		this.closeModal();
 	}
 
@@ -97,6 +117,51 @@ export default class Header extends React.Component {
 		} else {
 			return <Mnemonic handleMnemonic={this.handleMnemonic}/>
 		}
+	}
+
+	authenticationFlow() {
+		if (localStorage.getItem('github-name') != null) {
+			localStorage.setItem('isAuthed', true);
+			this.setState({
+				githubUsername: localStorage.getItem('github-name'),
+				githubAvatar: localStorage.getItem('github-avatar'),
+				buttonText: this.state.githubUsername,
+				isAuthed: true
+			})
+		} else {
+			this.removeAll();
+		}
+	}
+
+	removeAll() {
+		localStorage.removeItem('isAuthed');
+		localStorage.removeItem('github-name');
+		localStorage.removeItem('github-avatar');
+		this.setState({
+			isAuthed: false
+		})
+	}
+
+	mouseEnter() {
+		this.setState({
+			buttonText: 'Logout'
+		})
+	}
+
+	mouseLeave() {
+		this.setState({
+			buttonText: this.state.githubUsername
+		})
+	}
+
+	componentDidMount() {
+		this.updateDimensions();
+		window.addEventListener('resize', this.updateDimensions.bind(this));
+
+		const oauthScript = document.createElement("script");
+		oauthScript.src = "https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js";
+		document.body.appendChild(oauthScript);
+		this.authenticationFlow();
 	}
 	render() {
 		return(
@@ -114,7 +179,15 @@ export default class Header extends React.Component {
 						<div>
 							<ul className="menu">
 								<li><NavLink to="/explorer">Explorer</NavLink></li>
-								<li><button onClick={this.openModal}>Get Started</button></li>
+								{
+									this.state.isAuthed
+									? (
+										<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
+									)
+									: (
+										<li><button onClick={this.openModal}>Get Started</button></li>
+									)
+								}
 							</ul>
 							{
 								this.state.showMenuIcon
@@ -139,7 +212,15 @@ export default class Header extends React.Component {
 									<div>
 										<ul className="menu">
 											<li><NavLink to="/explorer">Explorer</NavLink></li>
-											<li><button onClick={this.openModal}>Get Started</button></li>
+											{
+												this.state.isAuthed
+												? (
+													<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
+												)
+												: (
+													<li><button onClick={this.openModal}>Get Started</button></li>
+												)
+											}
 										</ul>
 									</div>
 								)
@@ -157,6 +238,7 @@ export default class Header extends React.Component {
 						overlay: "dashboardOverlay",
 						modal: "dashboardModal"
 					}}
+					closeOnOverlayClick={false}
 					center
 				>
 					{ this.renderTab() }
