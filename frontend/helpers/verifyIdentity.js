@@ -10,8 +10,8 @@ const axios = axiosLibrary.create({
     }
 });
 
-async function getBounties() {
-    address = config.ESCROW_ADDRESS;
+async function verifyIdentity(githubUser, addr) {
+    address = config.IDENTITY_ADDRESS;
     date = new Date();
 
     fromDate = '2019-09-13'
@@ -28,45 +28,33 @@ async function getBounties() {
         })
         .catch(err => console.log(err))
 
-    let bountyList = [];
+    let identityMapping = {};
     transactionList.forEach(transaction => {
-        // console.log(transaction)
-        let bountyNote;
+        console.log(transaction)
 
         if (transaction.noteb64) {
             let buff = Buffer.from(transaction.noteb64, 'base64');  
             bountyNote = buff.toString('utf-8');
         }
 
-        let parsedBountyNote = {}
+        username = bountyNote.substring(1);
 
-        if (bountyNote) {
-            link = bountyNote.split('link�').pop().split('�')[0].substring(1); // MONKAS 
-            type = bountyNote.split('�').pop().split('�')[0];
-            amount = transaction.payment.amount;
-
-            parsedBountyNote = {
-                link, type, amount
-            }
-        }
-
-        
-        if (parsedBountyNote.type === 'bounty-create') {
-            bountyList.push(parsedBountyNote)
-        }
+        identityMapping[username] = transaction.from;
     })
 
-    if (bountyList) {
-        console.log(bountyList)
+    if (identityMapping) {
+        console.log(identityMapping)
     } else {
         console.log("No bounties")
     }
 
-    return bountyList
+    userIsVerified = identityMapping[githubUser] === addr
+    console.log(userIsVerified)
+    return userIsVerified
 }
 
-getBounties();
+verifyIdentity("Ryan-Ouyang", "VRMFERUGNTKRSCRHJGIM626PWYD7DDX6YMJ7YBVXFU2Y7ZXH53Z5CS4M4Y")
 
 module.exports = {
-    getBounties: getBounties,
+    verifyIdentity: verifyIdentity,
 };
