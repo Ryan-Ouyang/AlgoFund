@@ -1,6 +1,7 @@
 from flask import Flask, request
 import requests
 from comments import create_comment, edit_comment
+import os 
 
 
 app = Flask(__name__)
@@ -18,9 +19,29 @@ def new_bounty(org_name, repo_name, issue_name):
     link = request.args.get('link')
     username = request.args.get('username')
     link_user = request.args.get('link_user')
-    content = "## New Bounty for " + issue_name + "\n" + \
-                "A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
+    # content = "## New Bounty for " + issue_name + "\n" + \
+    #             "A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
+
+
+
+
+    content = ""
+
+    cur_path = os.path.dirname(__file__)
+
+    new_path = os.path.relpath('templates/new_bounty.md', cur_path)
+    
+    print(str(cur_path))
+
+    f = open(new_path, 'r')
+    fl = f.readlines()
+
+    for l in fl:
+        content += l
+
+    content = content.format(username, link_user, value)
     print(content)
+
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
     return req
 
