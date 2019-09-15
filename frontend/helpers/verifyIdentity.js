@@ -10,7 +10,7 @@ const axios = axiosLibrary.create({
     }
 });
 
-async function verifyIdentity(github, addr) {
+async function verifyIdentity(githubUser, addr) {
     address = config.IDENTITY_ADDRESS;
     date = new Date();
 
@@ -37,20 +37,23 @@ async function verifyIdentity(github, addr) {
             bountyNote = buff.toString('utf-8');
         }
 
-        console.log(bountyNote);
-        // link = bountyNote.split('!').pop().split('�')[0]; // press F to pay respects since algosdk.decodeObj does not work
+        username = bountyNote.substring(1);
+
+        identityMapping[username] = transaction.from;
     })
 
-    // if (bountyList) {
-    //     console.log(bountyList)
-    // } else {
-    //     console.log("No bounties")
-    // }
+    if (identityMapping) {
+        console.log(identityMapping)
+    } else {
+        console.log("No bounties")
+    }
 
-    // return bountyList
+    userIsVerified = identityMapping[githubUser] === addr
+    console.log(userIsVerified)
+    return userIsVerified
 }
 
-verifyIdentity("Ryan-Ouyang", "asdf");
+verifyIdentity("Ryan-Ouyang", "GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A");
 
 module.exports = {
     verifyIdentity: verifyIdentity,

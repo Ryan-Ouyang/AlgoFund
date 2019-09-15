@@ -1,4 +1,4 @@
-const sendTransaction = require('./sendTransaction.js');
+const sendTransaction = require('../sendTransaction.js');
 
 note = {
     type: "bounty-create",
