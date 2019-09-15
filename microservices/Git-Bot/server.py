@@ -16,14 +16,14 @@ webhook = ""
 #TEST_STRING = "/new_bounty"
 
 
-@app.route('/new_bounty/<org_name>/<repo_name>/<issue_name>', methods=['GET','POST'])
-def new_bounty(org_name, repo_name, issue_name):
+@app.route('/new_bounty/<org_name>/<repo_name>/<issue_name>/<name>/<value2>', methods=['GET','POST'])
+def new_bounty(org_name, repo_name, issue_name, name, value2):
     value = request.args.get('value')
     link = request.args.get('link')
     username = request.args.get('username')
     link_user = request.args.get('link_user')
     # content = "## New Bounty for " + issue_name + "\n" + \
-    #             "A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
+    #             "A bounty has been added of " + value + " Algo, " + link + " by " + username + " " + link_user + "."
 
     content = ""
 
@@ -39,7 +39,7 @@ def new_bounty(org_name, repo_name, issue_name):
     for l in fl:
         content += l
 
-    content = content.format(username, link_user, value, org_name, repo_name, issue_name)
+    content = content.format(name, link_user, value2, org_name, repo_name, issue_name)
     print(content)
 
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
@@ -207,4 +207,3 @@ def analyze_survey():
 
 if __name__ == '__main__':
     app.run()
-
