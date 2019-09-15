@@ -50,6 +50,8 @@ export default class Create extends React.Component {
 			transCompleted: true
 		})
 		localStorage.setItem('bounty', true);
+		// TODO: temp
+		axios.post('http://127.0.0.1:5000/new_bounty/Ryan-Ouyang/AlgoFund/1/' + localStorage.getItem('github-username') + '/10');
 	}
 	showButton() {
 		if (this.state.buttonSubmit === false) {

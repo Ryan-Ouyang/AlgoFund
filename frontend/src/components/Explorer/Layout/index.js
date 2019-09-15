@@ -111,14 +111,14 @@ export default class Layout extends React.Component {
 				  "image": "https://avatars2.githubusercontent.com/u/5658226?v=4"
 				},
 				{
-					"link": "https://github.com/GoogleChrome/puppeteer/issues/4911",
+					"link": "https://github.com/Ryan-Ouyang/AlgoFund/issues/1",
 					"value": 10,
 					"type": "bounty-create",
-					"date": "2019-09-05T17:47:00Z",
-					"title": "Puppeteer broken on Ubuntu 18.04 after upgrade & restart",
-					"path": "GoogleChrome/Puppeteer",
-					"num": "4911",
-					"image": "https://avatars3.githubusercontent.com/u/1778935?s=200&v=4"
+					"date": "2019-09-15T08:24:00Z",
+					"title": "Sample AlgoFund Issue",
+					"path": "Ryan-Ouyang/AlgoFund",
+					"num": "1",
+					"image": "https://avatars2.githubusercontent.com/u/55334964?s=460&v=4"
 				}
 			  ],
 			loaded: false
