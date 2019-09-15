@@ -9,7 +9,7 @@ export default class Layout extends React.Component {
 				<div>
 					<div>
 						<h1>Explorer</h1>
-						<Link to="/temp">+ Create Bounty</Link>
+						<Link to="/create">+ Create Bounty</Link>
 					</div>
 					<div>
 						<h3>Stage</h3>
