@@ -30,7 +30,7 @@ async function verifyIdentity(githubUser, addr) {
 
     let identityMapping = {};
     transactionList.forEach(transaction => {
-        // console.log(transaction)
+        console.log(transaction)
 
         if (transaction.noteb64) {
             let buff = Buffer.from(transaction.noteb64, 'base64');  
@@ -53,7 +53,7 @@ async function verifyIdentity(githubUser, addr) {
     return userIsVerified
 }
 
-verifyIdentity("Ryan-Ouyang", "GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A");
+verifyIdentity("Ryan-Ouyang", "VRMFERUGNTKRSCRHJGIM626PWYD7DDX6YMJ7YBVXFU2Y7ZXH53Z5CS4M4Y")
 
 module.exports = {
     verifyIdentity: verifyIdentity,
