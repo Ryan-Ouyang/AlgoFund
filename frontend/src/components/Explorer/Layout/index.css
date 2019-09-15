@@ -68,12 +68,23 @@
 }
 
 .layout > div:nth-child(2) {
-	width: calc(100% - 270px);
-	height: calc(100vh - 90px);
+	width: calc(100% - 310px);
+	height: calc(100vh - 130px);
 	display: inline-block;
 	vertical-align: top;
 }
 
+.box {
+	height: 300px;
+}
+
+.layout > div:nth-child(2) {
+	padding: 20px;
+}
+
+.layout > div:nth-child(2) > div > a {
+	margin: 10px;
+}
 /* Responsiveness */
 @media screen and (max-width: 700px) {
 	.layout > div:nth-child(1) {

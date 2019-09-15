@@ -10,6 +10,8 @@ const axios = axiosLibrary.create({
     }
 });
 
+const frontAxios = axiosLibrary.create();
+
 async function getBounties() {
     const address = config.ESCROW_ADDRESS;
     const date = new Date();
@@ -45,7 +47,7 @@ async function getBounties() {
             const type = bountyNote.split('�').pop().split('�')[0];
             const amount = transaction.payment.amount;
 
-            const parsedBountyNote = {
+            parsedBountyNote = {
                 link, type, amount
             }
         }
@@ -57,12 +59,33 @@ async function getBounties() {
     })
 
     if (bountyList) {
-        console.log(bountyList)
+        // console.log(bountyList)
     } else {
-        console.log("No bounties")
+        // console.log("No bounties")
     }
 
-    return bountyList
+    let returnedList = [];
+
+    await bountyList.forEach(async (bounty, i) => {
+        let newURL = bounty.link.substring(19);
+        let queryURL = 'https://api.github.com/repos/' + newURL;
+        
+        await frontAxios.get(queryURL)
+        .then(async response => {
+            const [postdate, title, repopath, issue_num] = [response.data.created_at, response.data.title, newURL.split('/issues/')[0], newURL.split('/')[newURL.split('/').length -1]];
+            await frontAxios.get(`https://api.github.com/users/${newURL.substring(0, newURL.indexOf('/'))}`)
+            .then(async response => {
+                const avatar = response.data.avatar_url;
+                // link: bounty.link, value: bounty.amount/1000000, type: bounty.type, date: postdate, title: title, path: repopath, num: issue_num, image: avatar}
+                await returnedList.push({link: bounty.link, value: bounty.amount/1000000, type: bounty.type, date: postdate, title: title, path: repopath, num: issue_num, image: avatar});
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err))
+    })
+
+    return returnedList;
+
 }
 
 module.exports = getBounties

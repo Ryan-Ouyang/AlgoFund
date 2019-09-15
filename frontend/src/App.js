@@ -16,7 +16,7 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/explorer" component={Explorer} />
         <Route path="/create" component={Create} />
-        <Router path="/bounty/:org?" component={Bounty} />
+        <Router path="/bounty/:org" component={Bounty} />
       </Router>
     </div>
   );

@@ -49,6 +49,7 @@ export default class Create extends React.Component {
 		this.setState({
 			transCompleted: true
 		})
+		localStorage.setItem('bounty', true);
 	}
 	showButton() {
 		if (this.state.buttonSubmit === false) {
