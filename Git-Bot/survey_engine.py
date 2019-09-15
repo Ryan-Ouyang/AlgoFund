@@ -5,31 +5,8 @@ YOUR_ACCESS_TOKEN = "cRHEKLapYea7COWZ25bv2.eua-FxZ7DtFoeVtawwnvxqerkZq6gvV0hZUfU
 
 survey_id = '188722779'
 
-'''
-response_id = '10993422773'
-
-s = requests.Session()
-s.headers.update({
-  "Authorization": "Bearer %s" % YOUR_ACCESS_TOKEN,
-  "Content-Type": "application/json"
-})
-
-url = "https://api.surveymonkey.com/v3/surveys/%s/responses/%s/details" % (survey_id, response_id)
-url_2 = "https://api.surveymonkey.com/v3/surveys/%s/responses" % survey_id
-response = s.get(url)
-response_2 = s.get(url_2)
-response_json = response.json()
-response_json_2 = response_2.json()
-print(response_json)
-print(response_json_2)
-resp_id = response_json_2['data'][response_json_2['total'] - 1]['id']
-print(response_id)
-#survey_list = response_json["data"]["surveys"]
-#print(survey_list)
-
-text_to_analyze = response_json['pages'][0]['questions'][2]['answers'][0]['text']
-print(text_to_analyze)
-'''
+azure_id = 'dad4cb456b37493caa8ce926317c29ee'
+azure_endpoint = 'https://algofund-sentimentanalysis.cognitiveservices.azure.com/'
 
 
 def retrieve_survey_results():
@@ -54,3 +31,27 @@ def retrieve_survey_results():
 
 
 print(retrieve_survey_results())
+
+
+def sentiment_analysis():
+    text_to_analyze = retrieve_survey_results()
+    subscription_key = azure_id
+    endpoint = azure_endpoint
+
+    sent_analysis_url = endpoint + "/text/analytics/v2.1/sentiment"
+
+    documents = {"documents": [
+        {"id": "1", "language": "en",
+         "text": text_to_analyze}
+    ]}
+
+    headers = {"Ocp-Apim-Subscription-Key": subscription_key}
+    response = requests.post(sent_analysis_url, headers=headers, json=documents)
+    sentiments = response.json()
+    sent_score = sentiments['documents'][0]['score']
+    return sent_score
+
+
+print(sentiment_analysis())
+
+

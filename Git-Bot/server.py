@@ -22,9 +22,6 @@ def new_bounty(org_name, repo_name, issue_name):
     # content = "## New Bounty for " + issue_name + "\n" + \
     #             "A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
 
-
-
-
     content = ""
 
     cur_path = os.path.dirname(__file__)
@@ -51,7 +48,6 @@ def new_applicant(org_name, repo_name, issue_name):
     name = request.args.get('name')
     link = request.args.get('link')
     desc = request.args.get('description')
-    
 
     url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
     session = requests.session()
