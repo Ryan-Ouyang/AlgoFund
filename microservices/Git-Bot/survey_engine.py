@@ -1,11 +1,10 @@
 import requests
 
-YOUR_ACCESS_TOKEN = "cRHEKLapYea7COWZ25bv2.eua-FxZ7DtFoeVtawwnvxqerkZq6gvV0hZUfUrtR.9fmqg0u.2LWB4fR6HEHykRIWGLeboq5.MX5Q" \
-                    "1PiDhJKnIYK6qfVSOR3eVv1ppwYju"
+YOUR_ACCESS_TOKEN = "XXXXXXXXXXX"
 
 survey_id = '188722779'
 
-azure_id = 'dad4cb456b37493caa8ce926317c29ee'
+azure_id = 'XXXXXXXXXXXX'
 azure_endpoint = 'https://algofund-sentimentanalysis.cognitiveservices.azure.com/'
 
 
