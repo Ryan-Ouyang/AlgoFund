@@ -1,11 +1,36 @@
 import requests
 
-YOUR_ACCESS_TOKEN = "XXXXXXXXXXX"
+YOUR_ACCESS_TOKEN = "XXXXX"
 
 survey_id = '188722779'
 
-azure_id = 'XXXXXXXXXXXX'
+azure_id = 'XXXXX'
 azure_endpoint = 'https://algofund-sentimentanalysis.cognitiveservices.azure.com/'
+
+
+def create_webhook():
+    s = requests.Session()
+    s.headers.update({
+        "Authorization": "Bearer %s" % YOUR_ACCESS_TOKEN,
+        "Content-Type": "application/json"
+    })
+
+    payload = {
+        "name": "My Webhook",
+        "event_type": "response_completed",
+        "object_type": "survey",
+        "object_ids": [survey_id],
+        "subscription_url": "https://www.surveymonkey.com/r/9GJMZVM"
+    }
+    url_webhook = "https://api.surveymonkey.com/v3/webhooks"
+    response = s.post(url_webhook, json=payload)
+    response_json = response.json()
+    #webhook = response_json['subscription_url']
+    return payload['subscription_url']
+    #return response_json
+
+
+#print(create_webhook())
 
 
 def retrieve_survey_results():
@@ -29,7 +54,7 @@ def retrieve_survey_results():
     return text_to_analyze
 
 
-print(retrieve_survey_results())
+#print(retrieve_survey_results())
 
 
 def sentiment_analysis():
@@ -51,6 +76,9 @@ def sentiment_analysis():
     return sent_score
 
 
-print(sentiment_analysis())
+#print(sentiment_analysis())
+
+
+
 
 

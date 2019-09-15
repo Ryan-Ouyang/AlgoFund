@@ -1,7 +1,8 @@
 from flask import Flask, request
 import requests
+import os
 from comments import create_comment, edit_comment
-import os 
+from survey_engine import create_webhook, sentiment_analysis
 
 
 app = Flask(__name__)
@@ -11,6 +12,7 @@ USERNAME = "AlgoFundBot"
 # backup = "AlgoFund-Bot"
 PASSWORD = "AlgoFund2019HTN"
 
+webhook = ""
 #TEST_STRING = "/new_bounty"
 
 
@@ -159,6 +161,8 @@ def work_submitted(org_name, repo_name, issue_name):
 
 @app.route('/work_finished/<org_name>/<repo_name>/<issue_name>/', methods=['GET','POST'])
 def work_finished(org_name, repo_name, issue_name):
+    global webhook
+
     name_1 = request.args.get('name_1')
     link_1 = request.args.get('link_1')
     name_2 = request.args.get('name_2')
@@ -185,7 +189,20 @@ def work_finished(org_name, repo_name, issue_name):
 
 
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
+
+    webhook = create_webhook()
+
     return req
+
+
+@app.route("/v3/surveys/188722779/responses/", methods=['POST'])
+def analyze_survey():
+    if request.method == 'POST':
+        sentiment_score = sentiment_analysis()
+    else:
+        print("Survey Monkey Callback Error")
+        sentiment_score = sentiment_analysis()
+    return sentiment_score
 
 
 if __name__ == '__main__':
