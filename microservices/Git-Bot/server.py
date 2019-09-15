@@ -22,9 +22,6 @@ def new_bounty(org_name, repo_name, issue_name):
     # content = "## New Bounty for " + issue_name + "\n" + \
     #             "A bounty has been added of " + value + ", " + link + " by " + username + " " + link_user + "."
 
-
-
-
     content = ""
 
     cur_path = os.path.dirname(__file__)
@@ -50,8 +47,6 @@ def new_bounty(org_name, repo_name, issue_name):
 def new_applicant(org_name, repo_name, issue_name):
     name = request.args.get('name')
     link = request.args.get('link')
-    desc = request.args.get('description')
-    
 
     url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
     session = requests.session()
@@ -61,32 +56,65 @@ def new_applicant(org_name, repo_name, issue_name):
     content = ""
 
     exists = False
-    link = ""
     applicant_num = 1
 
 
     for x in data:
-        if x['body'][:16] == "## Applications:":
+        if x['body'][:42] == "Bounty Status: 1. Open 2. **Applications**":
             exists = True
             commentlink = x['url']
-            applicant_num = int(x['body'][17])
+            applicant_num = int(x['body'][102])
             content = x['body']
             print(str(applicant_num) + " " + content)
 
     if exists:
         applicant_num += 1
 
-        content = content[:17] + str(applicant_num) + content[18:]
+        content = content[:102] + str(applicant_num) + content[103:]
 
-        content += str(applicant_num) + ". " + name + ", " + link + " has applied for this bounty: " + desc + ".\n"
+        cur_path = os.path.dirname(__file__)
+
+        new_path = os.path.relpath('templates/new_application.md', cur_path)
+    
+        print(str(cur_path))
+
+        f = open(new_path, 'r')
+        fl = f.readlines()
+        
+        template = ""
+
+        for l in fl:
+            template += l
+
+        template = template[106:163]
+
+        template = template.format(name, link)
+        print(template)
+
+        numofchars = 101 + len(org_name) + len (issue_name) + len(repo_name)
+
+
+        content = content[:len(content)-numofchars] + template + content[len(content)-numofchars:]
+
         req = edit_comment(commentlink, USERNAME, PASSWORD, content)
 
 
         print(content)
 
     else:
-        content = "## Applications: 1 \n" + \
-              "1. " + name + ", " + link + " has applied for this bounty: " + desc + ".\n"
+        cur_path = os.path.dirname(__file__)
+
+        new_path = os.path.relpath('templates/new_application.md', cur_path)
+    
+        print(str(cur_path))
+
+        f = open(new_path, 'r')
+        fl = f.readlines()
+
+        for l in fl:
+            content += l
+        
+        content = content.format(1, name, link, org_name, repo_name, issue_name)
         req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
 
     return req
