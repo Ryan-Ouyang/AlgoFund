@@ -7,7 +7,8 @@ import os
 app = Flask(__name__)
 
 
-USERNAME = "Algo-Bot1"
+USERNAME = "AlgoFundBot"
+# backup = "AlgoFund-Bot"
 PASSWORD = "AlgoFund2019HTN"
 
 #TEST_STRING = "/new_bounty"
