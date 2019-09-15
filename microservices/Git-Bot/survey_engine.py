@@ -26,11 +26,11 @@ def create_webhook():
     response = s.post(url_webhook, json=payload)
     response_json = response.json()
     #webhook = response_json['subscription_url']
-    #return payload['subscription_url']
-    return response_json
+    return payload['subscription_url']
+    #return response_json
 
 
-print(create_webhook())
+#print(create_webhook())
 
 
 def retrieve_survey_results():
@@ -76,7 +76,7 @@ def sentiment_analysis():
     return sent_score
 
 
-print(sentiment_analysis())
+#print(sentiment_analysis())
 
 
 
