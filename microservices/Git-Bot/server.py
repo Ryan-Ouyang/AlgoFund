@@ -46,10 +46,8 @@ def new_bounty(org_name, repo_name, issue_name, name, value2):
     return req
 
 
-@app.route('/new_applicant/<org_name>/<repo_name>/<issue_name>', methods=['GET','POST'])
-def new_applicant(org_name, repo_name, issue_name):
-    name = request.args.get('name')
-    link = request.args.get('link')
+@app.route('/new_applicant/<org_name>/<repo_name>/<issue_name>/<name>/<link>', methods=['GET','POST'])
+def new_applicant(org_name, repo_name, issue_name, name, link):
 
     url = "https://api.github.com/repos/" + org_name + "/" + repo_name + "/issues/" + issue_name + "/comments"
     session = requests.session()
@@ -127,12 +125,8 @@ def new_applicant(org_name, repo_name, issue_name):
     # if it doesn't exist then make a new one
 
 
-@app.route('/work_submitted/<org_name>/<repo_name>/<issue_name>', methods=['GET','POST'])
-def work_submitted(org_name, repo_name, issue_name):
-    name = request.args.get('name')
-    link = request.args.get('link')
-    val = request.args.get('val')
-    pr_num = request.args.get('pr_num')
+@app.route('/work_submitted/<org_name>/<repo_name>/<issue_name>/<name>/<link>/<pr_num>', methods=['GET','POST'])
+def work_submitted(org_name, repo_name, issue_name, name, link, pr_num)):
     pr_url = "https://github.com/" + org_name + "/" + repo_name + "/pulls/" + pr_num
     
     content = ""
@@ -159,16 +153,11 @@ def work_submitted(org_name, repo_name, issue_name):
     return req
 
 
-@app.route('/work_finished/<org_name>/<repo_name>/<issue_name>/', methods=['GET','POST'])
-def work_finished(org_name, repo_name, issue_name):
+@app.route('/work_finished/<org_name>/<repo_name>/<issue_name>/<name_1>/<link_1>/<name_2>/<link_2>/<value>', methods=['GET','POST'])
+def work_finished(org_name, repo_name, issue_name, name_1, link_1, name_2, link_2, value):
     global webhook
 
-    name_1 = request.args.get('name_1')
-    link_1 = request.args.get('link_1')
-    name_2 = request.args.get('name_2')
-    link_2 = request.args.get('link_2')
-    value = request.args.get('value')
-    surveylink = request.args.get('surveylink')
+    surveylink = 'https://www.surveymonkey.com/r/9GJMZVM'
     
     content = ""
 
