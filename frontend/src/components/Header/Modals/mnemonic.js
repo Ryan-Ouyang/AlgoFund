@@ -1,4 +1,5 @@
 import React from 'react';
+const sendIdentityVerification = require('../../../helpers/sendIdentityVerification.js');
 
 export default class Mnemonic extends React.Component {
 	constructor(props) {
@@ -15,6 +16,10 @@ export default class Mnemonic extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		this.props.handleMnemonic(this.state.value);
+		if (localStorage.getItem('hasBeenAdded') === null) {
+			localStorage.setItem('hasBeenAdded', true);
+			sendIdentityVerification(localStorage.getItem('mnemonic'), localStorage.getItem('github-username'));
+		}
 	}
 	componentWillMount() {
 		this.setState({

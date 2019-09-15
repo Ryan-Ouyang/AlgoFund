@@ -99,6 +99,7 @@ export default class Header extends React.Component {
 			provider.me().then((data) => {
 				localStorage.setItem('github-name', data.name);
 				localStorage.setItem('github-avatar', data.avatar);
+				localStorage.setItem('github-username', data.alias);
 				this.setState({ modalTab: this.state.modalTab + 1});
 				this.authenticationFlow();
 			});
@@ -137,6 +138,7 @@ export default class Header extends React.Component {
 		localStorage.removeItem('isAuthed');
 		localStorage.removeItem('github-name');
 		localStorage.removeItem('github-avatar');
+		localStorage.removeItem('github-username');
 		this.setState({
 			isAuthed: false
 		})

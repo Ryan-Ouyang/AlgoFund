@@ -11,11 +11,11 @@ const axios = axiosLibrary.create({
 });
 
 async function getBounties() {
-    address = config.ESCROW_ADDRESS;
-    date = new Date();
+    const address = config.ESCROW_ADDRESS;
+    const date = new Date();
 
-    fromDate = '2019-09-13'
-    toDate = `${date.getFullYear() + 1}-${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getDate() + 1}`
+    const fromDate = '2019-09-13'
+    const toDate = `${date.getFullYear() + 1}-${("0" + (date.getMonth() + 1)).slice(-2)}-${date.getDate() + 1}`
 
     const queryURL = `/v1/account/${address}/transactions?toDate=${toDate}&fromDate=${fromDate}`
     console.log(queryURL)
@@ -41,11 +41,11 @@ async function getBounties() {
         let parsedBountyNote = {}
 
         if (bountyNote) {
-            link = bountyNote.split('link�').pop().split('�')[0].substring(1); // MONKAS 
-            type = bountyNote.split('�').pop().split('�')[0];
-            amount = transaction.payment.amount;
+            const link = bountyNote.split('link�').pop().split('�')[0].substring(1); // MONKAS 
+            const type = bountyNote.split('�').pop().split('�')[0];
+            const amount = transaction.payment.amount;
 
-            parsedBountyNote = {
+            const parsedBountyNote = {
                 link, type, amount
             }
         }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
+const sendTransaction = require('../../helpers/sendTransaction.js');
 
 export default class Create extends React.Component {
 	constructor() {
@@ -10,12 +11,15 @@ export default class Create extends React.Component {
 		this.state = {
 			returnedValue: '',
 			issueLink: '',
-			buttonSubmit: false
+			buttonSubmit: false,
+			transCompleted: false
 		}
 
 		this.returnValue = this.returnValue.bind(this);
 		this.renderMarkdown = this.renderMarkdown.bind(this);
 		this.returnValueAlgo = this.returnValueAlgo.bind(this);
+		this.submitBounty = this.submitBounty.bind(this);
+		this.showButton = this.showButton.bind(this);
 	}
 	returnValue(evt) {
 		this.setState({
@@ -37,6 +41,23 @@ export default class Create extends React.Component {
 	}
 	submitBounty() {
 		console.log('Submit');
+		const note = {
+			type: "bounty-create",
+			link: this.state.issueLink
+		}
+		sendTransaction(localStorage.getItem('mnemonic'), note, this.state.issueValue * 1000000);
+		this.setState({
+			transCompleted: true
+		})
+	}
+	showButton() {
+		if (this.state.buttonSubmit === false) {
+			return <button onClick={this.renderMarkdown}>Render Markdown</button>;
+		} else if (this.state.buttonSubmit === true && this.state.transCompleted === false) {
+			return <button onClick={this.submitBounty}>Submit Bounty</button>;
+		} else {
+			return <button disabled style={disabled}>Bounty Submitted</button>;
+		}
 	}
 	render() {
 		return(
@@ -71,17 +92,15 @@ export default class Create extends React.Component {
 						<p>Here is what will be posted:</p>
 						<textarea value={this.state.returnedValue} readOnly></textarea>
 						{
-							this.state.buttonSubmit
-							? (
-								<button onClick={this.submitBounty}>Submit Bounty</button>
-							)
-							: (
-								<button onClick={this.renderMarkdown}>Render Markdown</button>
-							)
+							this.showButton()
 						}
 					</div>
 				</div>
 			</div>
 		)
 	}
+}
+
+const disabled = {
+	backgroundColor: "#a4c639",
 }
