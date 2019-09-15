@@ -10,8 +10,8 @@ const axios = axiosLibrary.create({
     }
 });
 
-async function getBounties() {
-    address = config.ESCROW_ADDRESS;
+async function verifyIdentity(github, addr) {
+    address = config.IDENTITY_ADDRESS;
     date = new Date();
 
     fromDate = '2019-09-13'
@@ -28,45 +28,30 @@ async function getBounties() {
         })
         .catch(err => console.log(err))
 
-    let bountyList = [];
+    let identityMapping = {};
     transactionList.forEach(transaction => {
         // console.log(transaction)
-        let bountyNote;
 
         if (transaction.noteb64) {
             let buff = Buffer.from(transaction.noteb64, 'base64');  
             bountyNote = buff.toString('utf-8');
         }
 
-        let parsedBountyNote = {}
-
-        if (bountyNote) {
-            link = bountyNote.split('link�').pop().split('�')[0].substring(1); // MONKAS 
-            type = bountyNote.split('�').pop().split('�')[0];
-            amount = transaction.payment.amount;
-
-            parsedBountyNote = {
-                link, type, amount
-            }
-        }
-
-        
-        if (parsedBountyNote.type === 'bounty-create') {
-            bountyList.push(parsedBountyNote)
-        }
+        console.log(bountyNote);
+        // link = bountyNote.split('!').pop().split('�')[0]; // press F to pay respects since algosdk.decodeObj does not work
     })
 
-    if (bountyList) {
-        console.log(bountyList)
-    } else {
-        console.log("No bounties")
-    }
+    // if (bountyList) {
+    //     console.log(bountyList)
+    // } else {
+    //     console.log("No bounties")
+    // }
 
-    return bountyList
+    // return bountyList
 }
 
-getBounties();
+verifyIdentity("Ryan-Ouyang", "asdf");
 
 module.exports = {
-    getBounties: getBounties,
+    verifyIdentity: verifyIdentity,
 };
