@@ -125,7 +125,7 @@ export default class Header extends React.Component {
 			this.setState({
 				githubUsername: localStorage.getItem('github-name'),
 				githubAvatar: localStorage.getItem('github-avatar'),
-				buttonText: this.state.githubUsername,
+				buttonText: localStorage.getItem('github-name'),
 				isAuthed: true
 			})
 		} else {
@@ -182,7 +182,7 @@ export default class Header extends React.Component {
 								{
 									this.state.isAuthed
 									? (
-										<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
+										<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img alt='avatar' src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
 									)
 									: (
 										<li><button onClick={this.openModal}>Get Started</button></li>
@@ -215,7 +215,7 @@ export default class Header extends React.Component {
 											{
 												this.state.isAuthed
 												? (
-													<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
+													<li><button className="authedButton" onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick={this.removeAll}><div><img alt='avatar' src={this.state.githubAvatar}/></div><div><span>{this.state.buttonText}</span></div></button></li>
 												)
 												: (
 													<li><button onClick={this.openModal}>Get Started</button></li>
