@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Landing from './pages/Landing';
 import Explorer from './pages/Explorer';
 import Create from './pages/Create';
+import Bounty from './pages/Bounty';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" exact component={Landing} />
         <Route path="/explorer" component={Explorer} />
         <Route path="/create" component={Create} />
+        <Router path="/bounty/:org?" component={Bounty} />
       </Router>
     </div>
   );

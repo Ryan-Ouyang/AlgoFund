@@ -1,20 +1,20 @@
-const config = require('config.json');
+const config = require('./config.js');
 
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.post('/payout', (req, res) => {
+app.post('/payout', async function(req, res) {
     const note = req.body.note
     const amount = req.body.amount
     const toAddr = req.body.toAddr
     
-    var recoveredAccount = algosdk.mnemonicToSecretKey(mnemonic); 
+    var recoveredAccount = await algosdk.mnemonicToSecretKey(mnemonic); 
     console.log(recoveredAccount.addr);
 
-    let params = await algodclient.getTransactionParams();
+    let params = algodclient.getTransactionParams();
     let endRound = params.lastRound + parseInt(1000);
 
     let txn = {
