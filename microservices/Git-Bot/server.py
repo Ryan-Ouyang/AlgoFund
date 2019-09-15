@@ -103,9 +103,27 @@ def work_submitted(org_name, repo_name, issue_name):
     val = request.args.get('val')
     pr_num = request.args.get('pr_num')
     pr_url = "https://github.com/" + org_name + "/" + repo_name + "/pulls/" + pr_num
-    content = "## Work Submitted\n" + \
-              name + ", " + link + " has submitted a bounty of value " + val + ". Please see his/her PR here: " + \
-              pr_url + "."
+    
+    content = ""
+
+    cur_path = os.path.dirname(__file__)
+
+    new_path = os.path.relpath('templates/work_submitted.md', cur_path)
+    
+    print(str(cur_path))
+
+    f = open(new_path, 'r')
+    fl = f.readlines()
+
+    for l in fl:
+        content += l
+
+    content = content.format(name, link, pr_num, pr_url, name)
+    print(content)
+
+
+
+
     req = create_comment(org_name, repo_name, issue_name, USERNAME, PASSWORD, content)
     return req
 
